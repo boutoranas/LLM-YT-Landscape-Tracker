@@ -47,12 +47,74 @@ def get_recent_videos(channel_url, limit=2):
 def get_video_speaker(video, channel_url):
     return video.get('uploader') or video.get('channel') or channel_url.rsplit('/', 1)[-1]
 
-def get_transcript(video_id):
+def _parse_vtt_to_text(vtt_path):
     try:
-        transcript = YouTubeTranscriptApi().fetch(video_id, languages=("en",))
-        return " ".join(snippet.text for snippet in transcript)
-    except:
-        return "No transcript available."
+        with open(vtt_path, "r", encoding="utf-8") as f:
+            lines = f.readlines()
+    except Exception:
+        return None
+
+    text_lines = []
+    timestamp_re = re.compile(r"^\d{2}:\d{2}:\d{2}\.\d{3}")
+    for line in lines:
+        line = line.strip()
+        if not line:
+            continue
+        if line.upper().startswith("WEBVTT"):
+            continue
+        # skip timestamps and cue ids
+        if timestamp_re.search(line) or line.isdigit():
+            continue
+        text_lines.append(line)
+    if not text_lines:
+        return None
+    return " ".join(text_lines)
+
+
+def get_transcript(video_id, tries=3, backoff=2):
+    # 1) Try youtube_transcript_api first
+    try:
+        transcript = YouTubeTranscriptApi.get_transcript(video_id, languages=["en"])
+        return " ".join(item.get('text', '') for item in transcript)
+    except Exception as e:
+        print(f"  youtube_transcript_api failed for {video_id}: {type(e).__name__}")
+
+    # 2) Fallback: try yt_dlp to fetch subtitles (automatic or provided), parse VTT
+    transcripts_dir = os.path.join(os.path.dirname(__file__), "transcripts")
+    os.makedirs(transcripts_dir, exist_ok=True)
+    url = f"https://youtu.be/{video_id}"
+
+    for attempt in range(1, tries + 1):
+        try:
+            ydl_opts = {
+                'skip_download': True,
+                'writesubtitles': True,
+                'writeautomaticsub': True,
+                'subtitlesformat': 'vtt',
+                'outtmpl': os.path.join(transcripts_dir, '%(id)s.%(ext)s'),
+                'quiet': True,
+            }
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                print(f"  yt_dlp: attempting to download subtitles for {video_id} (attempt {attempt})")
+                ydl.download([url])
+
+            # find VTT file for this id
+            pattern = os.path.join(transcripts_dir, f"{video_id}.*")
+            matches = glob.glob(pattern)
+            for m in matches:
+                if m.lower().endswith('.vtt') or '.vtt' in m.lower():
+                    parsed = _parse_vtt_to_text(m)
+                    if parsed:
+                        return parsed
+
+            # no subtitles found this attempt
+            print(f"  yt_dlp: no subtitles found for {video_id} on attempt {attempt}")
+        except Exception as e:
+            print(f"  yt_dlp error for {video_id} on attempt {attempt}: {type(e).__name__}: {e}")
+
+        time.sleep(backoff ** attempt)
+
+    return "No transcript available."
 
 def analyze_content(speaker, title, transcript, context_summary):
     global client
