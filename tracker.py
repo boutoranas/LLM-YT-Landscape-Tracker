@@ -39,9 +39,8 @@ def get_video_speaker(video, channel_url):
 
 def get_transcript(video_id):
     try:
-        # Use the library's get_transcript API which returns a list of dicts
-        transcript = YouTubeTranscriptApi.get_transcript(video_id, languages=["en"])  
-        return " ".join(snippet.get('text', '') for snippet in transcript)
+        transcript = YouTubeTranscriptApi().fetch(video_id, languages=("en",))
+        return " ".join(snippet.text for snippet in transcript)
     except:
         return "No transcript available."
 
