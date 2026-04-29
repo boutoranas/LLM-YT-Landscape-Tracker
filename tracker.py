@@ -1,5 +1,8 @@
 import os
 import json
+import glob
+import re
+import time
 import yt_dlp
 import traceback
 from youtube_transcript_api import YouTubeTranscriptApi
@@ -74,8 +77,20 @@ def _parse_vtt_to_text(vtt_path):
 def get_transcript(video_id, tries=3, backoff=2):
     # 1) Try youtube_transcript_api first
     try:
-        transcript = YouTubeTranscriptApi.get_transcript(video_id, languages=["en"])
-        return " ".join(item.get('text', '') for item in transcript)
+        try:
+            transcript = YouTubeTranscriptApi.get_transcript(video_id, languages=["en"])
+        except AttributeError:
+            transcript = YouTubeTranscriptApi().fetch(video_id, languages=("en",))
+
+        items = []
+        for item in transcript:
+            if isinstance(item, dict):
+                items.append(item.get('text', ''))
+            else:
+                items.append(getattr(item, 'text', ''))
+        text = " ".join(part for part in items if part)
+        if text:
+            return text
     except Exception as e:
         print(f"  youtube_transcript_api failed for {video_id}: {type(e).__name__}")
 
@@ -112,7 +127,8 @@ def get_transcript(video_id, tries=3, backoff=2):
         except Exception as e:
             print(f"  yt_dlp error for {video_id} on attempt {attempt}: {type(e).__name__}: {e}")
 
-        time.sleep(backoff ** attempt)
+        if attempt < tries:
+            time.sleep(backoff ** attempt)
 
     return "No transcript available."
 
