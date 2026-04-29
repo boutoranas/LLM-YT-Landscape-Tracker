@@ -1,0 +1,124 @@
+[
+    {
+        "id": "EWvNQjAaOHw",
+        "speaker": "@AndrejKarpathy",
+        "title": "How I use LLMs",
+        "url": "https://youtu.be/EWvNQjAaOHw",
+        "transcript": "No transcript available.",
+        "topics": [
+            "Prompt Engineering",
+            "LLM Application Development",
+            "Agentic Workflows",
+            "Practical LLM Deployment",
+            "Retrieval Augmented Generation (RAG)",
+            "LLM Evaluation (from a user perspective)",
+            "Personal Productivity with LLMs"
+        ],
+        "summary": "Due to the absence of a transcript, a summary of the creator's specific statements cannot be provided. The video title 'How I use LLMs' suggests a focus on practical applications and personal workflows with large language models.",
+        "relationship": "Without the video's content, it is not possible to determine its specific relationship or contribution to the recent LLM landscape. The title implies a practical perspective on current LLM usage, which is a common theme in the evolving LLM ecosystem."
+    },
+    {
+        "id": "7xTGNNLPyMI",
+        "speaker": "@AndrejKarpathy",
+        "title": "Deep Dive into LLMs like ChatGPT",
+        "url": "https://youtu.be/7xTGNNLPyMI",
+        "transcript": "No transcript available.",
+        "topics": [
+            "LLM Architecture",
+            "Transformer Models",
+            "Generative AI",
+            "Model Training (Pre-training, Fine-tuning)",
+            "RLHF",
+            "Model Capabilities and Limitations"
+        ],
+        "summary": "Due to the unavailability of a transcript, a summary of what Andrej Karpathy actually says cannot be provided. Based on the title, the video is expected to offer a technical deep dive into the foundational concepts and mechanisms of large language models, similar to those powering ChatGPT.",
+        "relationship": "Andrej Karpathy is a highly influential voice in the LLM space, known for his ability to demystify complex AI concepts. This video, titled 'Deep Dive into LLMs like ChatGPT,' likely serves to provide foundational technical understanding that underpins the recent advancements and releases in the LLM landscape, rather than introducing new research or contradicting existing views."
+    },
+    {
+        "id": "yzajLZXh9JU",
+        "speaker": "@TwoMinutePapers",
+        "title": "Solved: The Bug That Haunted AI Video For Years",
+        "url": "https://youtu.be/yzajLZXh9JU",
+        "transcript": "No transcript available.",
+        "topics": [
+            "AI Video Generation",
+            "Video Synthesis",
+            "Generative AI",
+            "Technical Challenges in AI",
+            "AI Model Improvement"
+        ],
+        "summary": "The video from Two Minute Papers announces a significant breakthrough in AI video technology. It details the resolution of a long-standing technical issue or 'bug' that has hindered AI video generation for several years.",
+        "relationship": "This advancement in AI video generation aligns with the broader trend of multimodal AI, where techniques and architectures (like transformers and diffusion models) common in LLMs are being applied to visual domains. It directly supports the development of more capable text-to-video models, a key area of interest for extending LLM capabilities."
+    },
+    {
+        "id": "Xf_v62TQOx4",
+        "speaker": "@TwoMinutePapers",
+        "title": "NVIDIA's New AI Broke My Brain",
+        "url": "https://youtu.be/Xf_v62TQOx4",
+        "transcript": "No transcript available.",
+        "topics": [
+            "NVIDIA AI research",
+            "Generative AI",
+            "Deep learning breakthroughs",
+            "AI hardware acceleration",
+            "Real-time AI"
+        ],
+        "summary": "Based solely on the title, the video likely introduces a groundbreaking new AI technology from NVIDIA that has profoundly impressed the creator. The creator, @TwoMinutePapers, is expected to showcase the capabilities and implications of this advanced AI, emphasizing its innovative nature and potential impact.",
+        "relationship": "This video likely builds on the broader trend of increasingly powerful and multimodal generative AI models, showcasing NVIDIA's contributions to advanced AI capabilities. It could represent a significant leap in AI system performance or application, potentially influencing or accelerating the development of future large language models and other complex AI applications by providing new tools, techniques, or hardware optimizations."
+    },
+    {
+        "id": "xHi8PUIVyoo",
+        "speaker": "@YannicKilcher",
+        "title": "I BUILT A FULLY AUTOMATIC MANSPLAINER",
+        "url": "https://youtu.be/xHi8PUIVyoo",
+        "transcript": "No transcript available.",
+        "topics": [
+            "Generative AI",
+            "Large Language Models (LLMs)",
+            "AI Ethics",
+            "Bias in AI",
+            "Prompt Engineering",
+            "Satire in AI",
+            "System Design"
+        ],
+        "summary": "Based on the title, the creator likely demonstrates a system built using a Large Language Model (LLM) designed to automatically generate content mimicking \"mansplaining.\" This project probably serves as a satirical commentary on AI's ability to adopt specific personas and potentially amplify societal biases, while also showcasing practical application of generative AI.",
+        "relationship": "This video builds on the general capabilities of modern LLMs to adopt specific personas and generate stylized text, similar to how models are fine-tuned for various applications. It also serves as a satirical commentary on AI's potential to reflect and amplify societal biases, implicitly touching upon the ongoing challenges of controlling LLM output and ensuring ethical behavior, a recurring theme in the LLM landscape."
+    },
+    {
+        "id": "taCVT5vDAk0",
+        "speaker": "@YannicKilcher",
+        "title": "TiDAR: Think in Diffusion, Talk in Autoregression (Paper Analysis)",
+        "url": "https://youtu.be/taCVT5vDAk0",
+        "transcript": "No transcript available.",
+        "topics": [
+            "Diffusion Models",
+            "Autoregressive Models",
+            "Generative AI",
+            "Hybrid Architectures",
+            "Paper Analysis",
+            "Text Generation"
+        ],
+        "summary": "This video by Yannic Kilcher analyzes a research paper titled \"TiDAR: Think in Diffusion, Talk in Autoregression.\" The paper likely proposes a novel generative model architecture that integrates diffusion processes for latent representation or planning with autoregressive methods for sequential output generation.",
+        "relationship": "This work explores hybrid generative architectures, moving beyond the purely autoregressive paradigm dominant in current LLMs. It connects to the broader LLM landscape by investigating alternative or complementary model designs that could address limitations of existing LLMs or enable new capabilities, potentially leveraging the strengths of diffusion models for more robust or coherent generation."
+    },
+    {
+        "id": "sY6aClejCcw",
+        "speaker": "@MatthewBerman",
+        "title": "Robin Barnes & Matthew Berman - Summertime / Smooth (The Porch Chronicles)",
+        "url": "https://youtu.be/sY6aClejCcw",
+        "transcript": "No transcript available.",
+        "topics": [],
+        "summary": "No transcript is available for analysis. The video title, \"Robin Barnes & Matthew Berman - Summertime / Smooth (The Porch Chronicles),\" strongly suggests a musical performance rather than a technical discussion.",
+        "relationship": "Given the lack of transcript and the musical nature implied by the title, this video does not appear to relate to the recent LLM landscape or technical AI research."
+    },
+    {
+        "id": "Xm7tBQP8lCY",
+        "speaker": "@MatthewBerman",
+        "title": "Sazerac - Antoine's Cocktail",
+        "url": "https://youtu.be/Xm7tBQP8lCY",
+        "transcript": "No transcript available.",
+        "topics": [],
+        "summary": "No transcript is available for this video. Based on the title, the content appears to be about the Sazerac cocktail and its connection to Antoine's, likely focusing on mixology or culinary history.",
+        "relationship": "This video, based on its title, does not appear to be related to technical AI research or the recent LLM landscape. It seems to focus on a culinary or mixology topic."
+    }
+]
