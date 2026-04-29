@@ -6,16 +6,6 @@ This repository contains the code and materials for the LLM YouTube Landscape Tr
 
 **Repository**: https://github.com/boutoranas/LLM-YT-Landscape-Tracker/
 
-**How to walk the live demo**
-- Open the live site in a browser and show the table (index.html). It loads `data.json` produced by the workflow.
-- Explain how each row is produced: the workflow collects recent videos, fetches transcripts, sends transcript snippets to the Vertex/GenAI model, and writes `data.json`.
-- Show the GitHub Actions run that produced the current `data.json` (Actions → "Tracker Heartbeat") and the `gh-pages` branch contents (index.html + data.json).
-
-**Submission Checklist**
-- Public GitHub repo with code and this report (README).
-- Live site URL (GitHub Pages) showing the hosted table.
-- Screenshots: live site, workflow run logs, `data.json` snapshot, and architecture diagram (optional).
-
 **Problem Statement**
 The goal is to track recent LLM-related YouTube videos, extract transcripts when available, and produce short structured summaries and topic tags that help reviewers quickly understand new developments in the LLM landscape.
 
@@ -56,6 +46,7 @@ Include short instructions to record evaluation results (a CSV or table): column
 **Limitations**
 
 - YouTube may rate-limit or block requests from GitHub-hosted runners or other cloud IPs. When that happens, RSS or transcript fetches can fail even if the code is correct.
+- In practice, GitHub Actions can be blocked even when local runs work, especially during transcript fetches. A fix to this would be to work with a proxy URL.
 - Some videos have no transcripts, no auto-captions, or captions that are not exposed through the transcript API. In those cases the tracker records a placeholder and the summary is title-based.
 - `yt-dlp`, transcript extraction, and YouTube page formats can change over time. If YouTube alters its internal structure, the fallback paths may need maintenance.
 - The live site depends on the latest successful GitHub Actions run and the `gh-pages` branch. If the workflow fails, the published table can lag behind the newest data.
@@ -65,8 +56,8 @@ Include short instructions to record evaluation results (a CSV or table): column
 Provide a short summary of results here and include concrete numbers. Replace the placeholders below before submission:
 
 - Total videos processed: 8
-- Videos with transcript: 4
-- Videos summarized successfully: 4
+- Videos with transcript: 5/8 when ran on github actions but 7/8 when ran locally
+- Videos summarized successfully: 8 (summarized successfully including those using title only, but only 5 if we consider only those with a available transcript)
 - Average summary quality (human-rated): N/A
 
 **Workflow Run Evidence**
@@ -78,62 +69,6 @@ Provide a short summary of results here and include concrete numbers. Replace th
 
 Below is a sample of the table produced by the tracker (these rows were generated during the most recent run):
 
-| Creator | Video Title | Video | Core Topics | What They Said | Landscape Context |
-|---|---:|---|---|---|---|
-| @MatthewBerman | Sazerac - Antoine's Cocktail | [Watch](https://youtu.be/) |  | The provided transcript indicates no content is available for analysis. Based on the title 'Sazerac - Antoine's Cocktail', the video appears to be about mixology rather than technical AI research. | This video, focusing on cocktail preparation, has no direct relationship or relevance to the recent LLM landscape or technical AI discussions. |
-| @MatthewBerman | Robin Barnes & Matthew Berman - Summertime / Smooth (The Porch Chronicles) | [Watch](https://youtu.be/) |  | No transcript is available for this video, so a summary of the creator's statements cannot be provided. | Due to the lack of a transcript, it is not possible to determine how this video connects to the recent LLM landscape. |
-| @YannicKilcher | TiDAR: Think in Diffusion, Talk in Autoregression (Paper Analysis) | [Watch](https://youtu.be/) | Diffusion Models, Autoregressive Models, Hybrid Generative Models, Large Language Models (LLMs), Generative AI Architectures, Paper Analysis | This video by Yannic Kilcher analyzes a research paper titled 'TiDAR: Think in Diffusion, Talk in Autoregression'. The paper likely introduces a novel generative model architecture that integrates principles from both diffusion models and autoregressive models, exploring their combined potential for generative tasks. | This work explores architectural innovation in generative AI, specifically by combining diffusion models (known for image/audio generation) with autoregressive models (foundational for LLMs). It represents a trend towards developing hybrid models that could enhance LLM capabilities, potentially offering new approaches for text generation, control, or multimodal integration beyond purely autoregressive transformers. |
-| @YannicKilcher | I BUILT A FULLY AUTOMATIC MANSPLAINER | [Watch](https://youtu.be/) | LLM applications, AI bias (gender bias, stereotypes), Autonomous agents / Agentic AI, Prompt engineering, Satire and critique in AI development, Ethical implications of AI | The creator, Yannic Kilcher, likely demonstrates building an AI system specifically engineered to automatically exhibit 'mansplaining' behavior. This project appears to be a satirical or critical commentary on LLM capabilities, inherent biases, or the ease with which specific personas can be elicited from AI models. | This project directly engages with the ongoing discourse around bias in large language models, particularly gender stereotypes, a critical area of focus for recent models like Llama 3. It also playfully explores the concept of agentic AI by creating a 'fully automatic' system, highlighting how LLMs can be prompted to embody specific, even undesirable, personas. |
-| @TwoMinutePapers | NVIDIA's New AI Broke My Brain | [Watch](https://youtu.be/) | NVIDIA AI research, Generative AI, Deep learning breakthroughs, AI hardware acceleration, Real-time AI | Based solely on the title, the video likely introduces a groundbreaking new AI technology from NVIDIA that has profoundly impressed the creator. The creator, @TwoMinutePapers, is expected to showcase the capabilities and implications of this advanced AI, emphasizing its innovative nature and potential impact. | This video likely builds on the broader trend of increasingly powerful and multimodal generative AI models, showcasing NVIDIA's contributions to advanced AI capabilities. It could represent a significant leap in AI system performance or application, potentially influencing or accelerating the development of future large language models and other complex AI applications by providing new tools, techniques, or hardware optimizations. |
-| @TwoMinutePapers | Solved: The Bug That Haunted AI Video For Years | [Watch](https://youtu.be/) | AI video generation, Video synthesis, Generative models, Computer vision, Temporal consistency | The video by Two Minute Papers likely discusses a significant breakthrough in AI video generation, focusing on a recent research paper or technique. This advancement has successfully resolved a long-standing technical challenge or 'bug' that has previously hindered the quality and realism of AI-generated video for years. | This development in AI video generation contributes to the broader trend of multimodal AI, where LLMs are increasingly integrated with visual capabilities to understand and generate complex content. It signifies progress in generative models, a shared foundation with many recent LLM advancements, and could enable more sophisticated text-to-video applications or visual reasoning for future LLMs. |
-| @AndrejKarpathy | Deep Dive into LLMs like ChatGPT | [Watch](https://youtu.be/) |  | No transcript was provided for analysis. Therefore, a summary of what Andrej Karpathy actually says cannot be provided. | Without a transcript, it is not possible to determine how this video connects to the recent LLM landscape or specific events like 'Contradicts Karpathy's view on X' or 'Builds on the Llama 3 release'. |
-| @AndrejKarpathy | How I use LLMs | [Watch](https://youtu.be/) |  | No transcript was provided, therefore a summary of the creator's actual statements cannot be generated. | Without the video's content, its specific relationship to the recent LLM landscape cannot be determined. However, given Andrej Karpathy's prominence and the title 'How I use LLMs', the video would likely contribute valuable insights into practical LLM application and workflow optimization, a highly relevant area in current LLM discourse. |
-
-- `screenshots/workflow-run.png` — Actions run logs showing successful run
+https://boutoranas.github.io/LLM-YT-Landscape-Tracker/
 
 
-**How to run locally (developer)**
-1. Copy `.env.example` to `.env` and set values; required fields:
-
-- `PROJECT_ID` — your GCP project id
-- `VERTEX_LOCATION` — e.g. `us-central1`
-- `GOOGLE_APPLICATION_CREDENTIALS` — local path to service_account.json (optional if using ADC)
-- `GEMINI_MODEL` — optional override model name
-
-2. Install deps and run:
-
-```powershell
-python -m venv .venv
-.\.venv\Scripts\activate
-pip install -r requirements.txt
-python tracker.py
-```
-
-**How to run on GitHub Actions (deployment)**
-1. Add the following repository secrets:
-- `SERVICE_ACCOUNT_JSON` — the full JSON contents of your service account key (do NOT commit the file)
-- `PROJECT_ID` — your GCP project id
-- `VERTEX_LOCATION` — optional; default `us-central1`
-
-2. Trigger the workflow from Actions (or wait for the scheduled run). The workflow writes `service_account.json` at runtime and sets `GOOGLE_APPLICATION_CREDENTIALS` for the job.
-
-**Fields you need to fill before submission**
-- Live site URL (GitHub Pages): add this to the top of this README after deployment.
-- Repository public URL: add repo link here.
-- Experimental numbers (replace placeholders in "Experimental Results").
-- Optional: attach the screenshots and architecture image files under `screenshots/` and `diagrams/`.
-
-**What images to attach**
-- Live site screenshot (`screenshots/live-site.png`)
-- Workflow run log screenshot (`screenshots/workflow-run.png`)
-- `data.json` excerpt screenshot or raw file (`screenshots/data-json-sample.png`)
-- Architecture / flow diagram (`diagrams/architecture.png`)
-
----
-
-If you want, I can:
-- Pre-fill the README top with your live site URL and repo URL once you provide them.
-- Add a `screenshots/` folder with placeholder images and a simple `diagrams/architecture.png` SVG.
-- Modify the workflow to also commit `data.json` to a `data/` branch if you prefer having the generated data available on `main`.
-
-*** End of report ***
