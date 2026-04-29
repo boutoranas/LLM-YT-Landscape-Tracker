@@ -12,6 +12,8 @@
 		<thead>
 			<tr>
 				<th>Creator</th>
+				<th>Video Title</th>
+				<th>Video</th>
 				<th>Core Topics</th>
 				<th>What They Said</th>
 				<th>Landscape Context</th>
@@ -26,6 +28,8 @@
 			data.reverse().forEach(v => {
 				const row = `<tr>
                     <td><a href="${v.url}">${v.speaker}</a></td>
+					<td>${v.title}</td>
+					<td><a href="${v.url}" target="_blank" rel="noopener">Watch</a></td>
                     <td>${v.topics.join(", ")}</td>
                     <td>${v.summary}</td>
                     <td>${v.relationship}</td>
