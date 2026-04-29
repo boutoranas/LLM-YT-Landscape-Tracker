@@ -16,12 +16,16 @@ CHANNELS = [
     "https://www.youtube.com/@MatthewBerman"
 ]
 DB_FILE = "data.json"
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "service_account.json"
 client = None
 
 # Default model name; override with GEMINI_MODEL env var if needed.
 MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+PROJECT_ID = os.getenv("PROJECT_ID") or os.getenv("GOOGLE_CLOUD_PROJECT")
+VERTEX_LOCATION = os.getenv("VERTEX_LOCATION", "us-central1")
+SERVICE_ACCOUNT_PATH = os.getenv("GOOGLE_APPLICATION_CREDENTIALS") or os.getenv("SERVICE_ACCOUNT")
+
+if SERVICE_ACCOUNT_PATH and not os.getenv("GOOGLE_APPLICATION_CREDENTIALS") and os.path.exists(SERVICE_ACCOUNT_PATH):
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = SERVICE_ACCOUNT_PATH
 
 def get_recent_videos(channel_url, limit=2):
     ydl_opts = {'quiet': True, 'extract_flat': True, 'force_generic_ext': True}
@@ -35,8 +39,9 @@ def get_video_speaker(video, channel_url):
 
 def get_transcript(video_id):
     try:
-        transcript = YouTubeTranscriptApi().fetch(video_id, languages=("en",))
-        return " ".join(snippet.text for snippet in transcript)
+        # Use the library's get_transcript API which returns a list of dicts
+        transcript = YouTubeTranscriptApi.get_transcript(video_id, languages=["en"])  
+        return " ".join(snippet.get('text', '') for snippet in transcript)
     except:
         return "No transcript available."
 
@@ -44,15 +49,11 @@ def analyze_content(speaker, title, transcript, context_summary):
     global client
 
     if client is None:
-        if not GEMINI_API_KEY:
-            raise RuntimeError(
-                "Missing Gemini API key. Set GEMINI_API_KEY (or GOOGLE_API_KEY) before running."
-            )
         client = genai.Client(
-			vertexai=True,                                 
-    		project='llm-yt-landcape-tracker-494807',      
-    		location='us-central1'
-		)
+				vertexai=True,
+				project=PROJECT_ID,
+				location=VERTEX_LOCATION,
+			)
 
     prompt = f"""
     You are a technical AI researcher. Analyze this YouTube video transcript.
