@@ -1,0 +1,4 @@
+yt_dlp
+youtube-transcript-api
+google-genai
+python-dotenv

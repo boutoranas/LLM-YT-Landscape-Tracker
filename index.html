@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>LLM Landscape Tracker</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+</head>
+
+<body>
+	<h1>LLM YouTube Landscape Tracker</h1>
+	<table id="tracker-table">
+		<thead>
+			<tr>
+				<th>Creator</th>
+				<th>Core Topics</th>
+				<th>What They Said</th>
+				<th>Landscape Context</th>
+			</tr>
+		</thead>
+		<tbody id="table-body"></tbody>
+	</table>
+
+	<script>
+		fetch('data.json').then(r => r.json()).then(data => {
+			const body = document.getElementById('table-body');
+			data.reverse().forEach(v => {
+				const row = `<tr>
+                    <td><a href="${v.url}">${v.speaker}</a></td>
+                    <td>${v.topics.join(", ")}</td>
+                    <td>${v.summary}</td>
+                    <td>${v.relationship}</td>
+                </tr>`;
+				body.innerHTML += row;
+			});
+		});
+	</script>
+</body>
+
+</html>
