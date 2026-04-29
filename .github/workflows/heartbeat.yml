@@ -57,7 +57,9 @@ jobs:
           cp index.html public/
           cp data.json public/ || true
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v1
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          path: public
+          folder: public
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages
