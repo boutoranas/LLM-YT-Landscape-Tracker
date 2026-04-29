@@ -48,13 +48,27 @@ def get_recent_videos(channel_url, limit=2):
 def get_video_speaker(video, channel_url):
     return video.get('uploader') or video.get('channel') or channel_url.rsplit('/', 1)[-1]
 
-def get_transcript(video_id, timeout=10):
+def get_transcript(video_id):
     try:
-        # Set timeout for transcript API
-        transcript = YouTubeTranscriptApi.get_transcript(video_id, languages=["en"])
-        return " ".join(item.get('text', '') for item in transcript)
+        # Try the modern classmethod first (newer library versions)
+        if hasattr(YouTubeTranscriptApi, "get_transcript"):
+            transcript = YouTubeTranscriptApi.get_transcript(video_id, languages=["en"])
+        else:
+            # Fallback to older instance method name if present
+            transcript = YouTubeTranscriptApi().fetch(video_id, languages=("en",))
+
+        # Normalize transcript entries (list of dicts -> join text)
+        texts = []
+        for item in transcript:
+            if isinstance(item, dict):
+                texts.append(item.get("text", ""))
+            else:
+                texts.append(str(item))
+        return " ".join(t for t in texts if t)
     except Exception as e:
-        print(f"  Transcript fetch failed for {video_id}: {type(e).__name__}")
+        print(f"  Transcript fetch failed for {video_id}: {type(e).__name__}: {e}")
+        import traceback as _tb
+        _tb.print_exc()
         return "No transcript available."
 
 def analyze_content(speaker, title, transcript, context_summary):
