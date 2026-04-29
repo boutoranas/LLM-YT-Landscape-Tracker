@@ -26,6 +26,16 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Configure proxy
+        env:
+          PROXY_URL: ${{ secrets.PROXY_URL }}
+        run: |
+          if [ -n "$PROXY_URL" ]; then
+            echo "HTTP_PROXY=$PROXY_URL" >> "$GITHUB_ENV"
+            echo "HTTPS_PROXY=$PROXY_URL" >> "$GITHUB_ENV"
+            echo "ALL_PROXY=$PROXY_URL" >> "$GITHUB_ENV"
+          fi
+
       - name: Provide credentials
         env:
           PROJECT_ID: ${{ secrets.PROJECT_ID }}
