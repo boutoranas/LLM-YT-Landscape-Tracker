@@ -9,12 +9,16 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Configuration
-CHANNELS = [
-    "https://www.youtube.com/@AndrejKarpathy",
-    "https://www.youtube.com/@TwoMinutePapers",
-    "https://www.youtube.com/@YannicKilcher",
-    "https://www.youtube.com/@MatthewBerman"
-]
+# Channels are loaded from `dataset/channels.json` when available.
+DATASET_CHANNELS_PATH = os.path.join(os.path.dirname(__file__), "dataset", "channels.json")
+try:
+    with open(DATASET_CHANNELS_PATH, "r", encoding="utf-8") as f:
+        CHANNELS = json.load(f)
+        # ensure it's a list of strings
+        if not isinstance(CHANNELS, list):
+            raise ValueError("channels dataset must be a JSON array")
+except Exception:
+    raise ValueError("Failed to load dataset")
 DB_FILE = "data.json"
 client = None
 
