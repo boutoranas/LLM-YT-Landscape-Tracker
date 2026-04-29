@@ -17,8 +17,15 @@ try:
         # ensure it's a list of strings
         if not isinstance(CHANNELS, list):
             raise ValueError("channels dataset must be a JSON array")
-except Exception:
-    raise ValueError("Failed to load dataset")
+except Exception as e:
+    print(f"Warning: Failed to load dataset ({e}), using fallback channels")
+    # Fallback to the built-in list if the dataset file is missing or invalid
+    CHANNELS = [
+        "https://www.youtube.com/@AndrejKarpathy",
+        "https://www.youtube.com/@TwoMinutePapers",
+        "https://www.youtube.com/@YannicKilcher",
+        "https://www.youtube.com/@MatthewBerman"
+    ]
 DB_FILE = "data.json"
 client = None
 
@@ -41,11 +48,13 @@ def get_recent_videos(channel_url, limit=2):
 def get_video_speaker(video, channel_url):
     return video.get('uploader') or video.get('channel') or channel_url.rsplit('/', 1)[-1]
 
-def get_transcript(video_id):
+def get_transcript(video_id, timeout=10):
     try:
-        transcript = YouTubeTranscriptApi().fetch(video_id, languages=("en",))
-        return " ".join(snippet.text for snippet in transcript)
-    except:
+        # Set timeout for transcript API
+        transcript = YouTubeTranscriptApi.get_transcript(video_id, languages=["en"])
+        return " ".join(item.get('text', '') for item in transcript)
+    except Exception as e:
+        print(f"  Transcript fetch failed for {video_id}: {type(e).__name__}")
         return "No transcript available."
 
 def analyze_content(speaker, title, transcript, context_summary):
@@ -72,6 +81,7 @@ def analyze_content(speaker, title, transcript, context_summary):
     3. relationship: How this connects to the recent LLM landscape (e.g. "Contradicts Karpathy's view on X" or "Builds on the Llama 3 release").
     """
     try:
+        print(f"  Calling GenAI model for analysis...")
         response = client.models.generate_content(
             model=MODEL,
             contents=prompt,
@@ -81,17 +91,12 @@ def analyze_content(speaker, title, transcript, context_summary):
         if not response_text and getattr(response, "candidates", None):
             parts = response.candidates[0].content.parts
             response_text = "".join(getattr(part, "text", "") for part in parts)
-        return json.loads(response_text)
+        result = json.loads(response_text)
+        print(f"  Analysis complete.")
+        return result
     except Exception as e:
         # Log the underlying error so it's visible in the terminal
-        print("Gemini API error:", type(e).__name__, str(e))
-        traceback.print_exc()
-        # If the response object exists, try to print it for debugging
-        try:
-            if 'response' in locals() and getattr(response, 'text', None):
-                print('Raw response.text:', response.text)
-        except Exception:
-            pass
+        print(f"  GenAI API error: {type(e).__name__}: {str(e)}")
         # If parsing fails or the API errored, return a safe fallback
         return {
             "topics": [],
@@ -114,13 +119,22 @@ def load_existing_data():
         return []
 
 def main():
+    print("Loading existing data...")
     data = load_existing_data()
     records_by_id = {v['id']: v for v in data}
+    print(f"Loaded {len(data)} existing records.")
 
     context_str = ", ".join([v['title'] for v in data[-5:]])
 
     for channel in CHANNELS:
-        videos = get_recent_videos(channel)
+        print(f"Processing channel: {channel}")
+        try:
+            videos = get_recent_videos(channel)
+            print(f"  Found {len(videos)} videos.")
+        except Exception as e:
+            print(f"  Error fetching videos: {type(e).__name__}: {e}")
+            continue
+            
         for v in videos:
             speaker = get_video_speaker(v, channel)
             existing = records_by_id.get(v['id'])
@@ -153,9 +167,13 @@ def main():
                     data.append(record)
                 else:
                     existing.update(record)
+            else:
+                print(f"Skipping (up-to-date): {v['title']}")
 
+    print(f"Writing {len(data)} records to {DB_FILE}...")
     with open(DB_FILE, "w") as f:
         json.dump(data, f, indent=4)
+    print("Done!")
 
 if __name__ == "__main__":
     main()
