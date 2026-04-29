@@ -30,10 +30,10 @@ jobs:
         env:
           PROJECT_ID: ${{ secrets.PROJECT_ID }}
           VERTEX_LOCATION: ${{ secrets.VERTEX_LOCATION }}
-          GOOGLE_APPLICATION_CREDENTIALS_JSON: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_JSON }}
+          SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
         run: |
-          if [ -n "$GOOGLE_APPLICATION_CREDENTIALS_JSON" ]; then
-            printf '%s' "$GOOGLE_APPLICATION_CREDENTIALS_JSON" > service_account.json
+          if [ -n "$SERVICE_ACCOUNT_JSON" ]; then
+            printf '%s' "$SERVICE_ACCOUNT_JSON" > service_account.json
             echo "GOOGLE_APPLICATION_CREDENTIALS=$PWD/service_account.json" >> "$GITHUB_ENV"
           fi
 
