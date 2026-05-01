@@ -186,5 +186,15 @@
         ],
         "summary": "The speaker attended the AI Art Festival in Geneva, highlighting its second edition as a cool place where artists interact with a system called Chimera. This system, powered by Stable Diffusion, a fine-tuned GPT-J, and audio models, facilitates the creation and exhibition of AI-designed instruments, mushroom sound projections, and AI-made musical scores.",
         "relationship": "This video showcases a practical, artistic application of generative AI, specifically Stable Diffusion and a fine-tuned GPT-J, demonstrating the creative potential of these models. It aligns with the broader exploration of LLMs and diffusion models for diverse applications, as seen in videos like 'Deep Dive into LLMs like ChatGPT' and 'TiDAR: Think in Diffusion, Talk in Autoregression'."
+    },
+    {
+        "id": "Dr6jw-WAd9E",
+        "speaker": "Yannic Kilcher",
+        "title": "Traditional X-Mas Stream",
+        "url": "https://youtu.be/Dr6jw-WAd9E",
+        "transcript": "No transcript available.",
+        "topics": [],
+        "summary": "The video is a casual, holiday-themed live stream by Yannic Kilcher, likely intended for community engagement rather than a technical deep dive. Without a transcript, the specific topics discussed or activities undertaken during the \"Traditional X-Mas Stream\" remain unknown.",
+        "relationship": "This video appears to be a non-technical, community-oriented event, contrasting with Yannic Kilcher's usual deep dives into LLMs and AI research. It provides a personal touch and a break from the intense technical discussions prevalent in the recent LLM landscape, offering a different form of engagement with his audience."
     }
 ]
