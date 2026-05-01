@@ -188,6 +188,23 @@
         "relationship": "This video showcases a practical, artistic application of generative AI, specifically Stable Diffusion and a fine-tuned GPT-J, demonstrating the creative potential of these models. It aligns with the broader exploration of LLMs and diffusion models for diverse applications, as seen in videos like 'Deep Dive into LLMs like ChatGPT' and 'TiDAR: Think in Diffusion, Talk in Autoregression'."
     },
     {
+        "id": "QzZ4VwDHAT4",
+        "speaker": "Two Minute Papers",
+        "title": "Sakana AI\u2019s Survival Simulator Is Brilliant",
+        "url": "https://youtu.be/QzZ4VwDHAT4",
+        "transcript": "No transcript available.",
+        "topics": [
+            "AI Simulation",
+            "Evolutionary AI",
+            "AI Agents",
+            "Multi-Agent Systems",
+            "Emergent Behavior",
+            "Sakana AI"
+        ],
+        "summary": "The video from Two Minute Papers introduces and explains Sakana AI's innovative survival simulator. It likely highlights the simulator's brilliance by showcasing its unique approach to AI agent interaction and adaptation in complex environments.",
+        "relationship": "This video explores a distinct but complementary facet of the current AI landscape, focusing on evolutionary AI and multi-agent simulation rather than direct LLM architecture. It contributes to the broader understanding of AI agent development and emergent behavior, which is crucial for building more sophisticated and autonomous LLM-powered agents and systems."
+    },
+    {
         "id": "Dr6jw-WAd9E",
         "speaker": "Yannic Kilcher",
         "title": "Traditional X-Mas Stream",
